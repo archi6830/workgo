@@ -1,8 +1,5 @@
-package Tweets
-type AllTweet struct{
-    Id          int64 'json:"id"'
-    FirstName   string 'json:"first_name"'
-    LastName    string 'json:"last_name"'
-    Email       string 'json:"email"'
-    DateCreated string 'json:"date_created"'
+package tweets
+type Tweet struct {
+    Id      int64  `json:"id"`
+    Message string `json:"message"`
 }
