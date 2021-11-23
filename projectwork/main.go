@@ -1,5 +1,7 @@
 package main
 
-func main(){
-    app.StartApplication()
+import "github.com/archi6830/workgo/projectwork/app"
+
+func main() {
+	app.StartApplication()
 }
