@@ -64,17 +64,10 @@ func findTweetById(idForSearch int64) *m_tweets.Tweet {
 	}
 	return nil
 }
-
 func FindTweetByMessage(c *gin.Context) {
 	tweetMessage := c.Param("tweet_message")
-	var foundedTweet *m_tweets.Tweet
-	for i, v := range tweetArr {
-		if tweetMessage == v.Message {
-			foundedTweet = &v
-			break
-		}
-		fmt.Printf("%d,%+v,\n", i, v)
-	}
+	var foundedTweet []m_tweets.Tweet
+	foundedTweet = findTweetByMessage(tweetMessage)
 	if foundedTweet == nil {
 		fmt.Println("не знаю такого твита")
 		c.String(http.StatusBadRequest, fmt.Sprintf("я с %s не нашел", tweetMessage))
@@ -82,6 +75,17 @@ func FindTweetByMessage(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, foundedTweet)
+}
+func findTweetByMessage(NewMessage string) []m_tweets.Tweet {
+	var MessageArr []m_tweets.Tweet
+	for i, v := range tweetArr {
+		if NewMessage == v.Message {
+			MessageArr = append(MessageArr, v)
+		}
+
+		fmt.Printf("%d,%+v,\n", i, v)
+	}
+	return MessageArr
 }
 func GetAllTweets(c *gin.Context) {
 	c.JSON(http.StatusOK, tweetArr)
