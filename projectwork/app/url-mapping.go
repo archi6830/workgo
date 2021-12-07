@@ -11,6 +11,6 @@ func mapUrls() {
 	//http://localhost:8082/tweets/1 -
 	router.GET("/tweets/:tweet_id", tweets.GetTweetById)
 	router.GET("/tweets", tweets.GetAllTweets)
-	router.GET("/search/tweets/:tweet_message", tweets.FindTweetByMessage)
+	router.GET("/search/tweets?searchString=tweet_message", tweets.FindTweetByMessage)
 	router.POST("/tweets", tweets.CreateTweet)
 }

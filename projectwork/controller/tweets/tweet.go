@@ -65,7 +65,8 @@ func findTweetById(idForSearch int64) *m_tweets.Tweet {
 	return nil
 }
 func FindTweetByMessage(c *gin.Context) {
-	tweetMessage := c.Param("tweet_message")
+	searchString := c.DefaultQuery("search_string", "none")
+	tweetMessage := c.Query("tweet_message")
 	var foundedTweet []m_tweets.Tweet
 	foundedTweet = findTweetByMessage(tweetMessage)
 	if foundedTweet == nil {
@@ -74,7 +75,7 @@ func FindTweetByMessage(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, foundedTweet)
+	c.String(http.StatusOK, searchString, tweetMessage, foundedTweet)
 }
 func findTweetByMessage(NewMessage string) []m_tweets.Tweet {
 	var MessageArr []m_tweets.Tweet
