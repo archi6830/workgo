@@ -3,12 +3,19 @@ package servaices
 import (
 	"fmt"
 	m_tweets "github.com/archi6830/workgo/projectwork/domen/tweet"
-	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 var TweetArr []m_tweets.Tweet
 
+func AddOrUpdate(newTweetToAddIntoArray m_tweets.Tweet) {
+	for i, v := range TweetArr { //создаем цыкл который пробигает по массиву
+		if v.Id == newTweetToAddIntoArray.Id { //проверка по ид
+			TweetArr[i] = newTweetToAddIntoArray //меняю значение по индексу
+			return
+		}
+	}
+	TweetArr = append(TweetArr, newTweetToAddIntoArray) //добавляем в массив новый твит
+}
 func FindTweetById(idForSearch int64) *m_tweets.Tweet {
 
 	for i, v := range TweetArr {
@@ -19,18 +26,7 @@ func FindTweetById(idForSearch int64) *m_tweets.Tweet {
 	}
 	return nil
 }
-func FindTweetByMessage(c *gin.Context) {
-	tweetMessage := c.Query("searchString")
-	var foundedTweet []m_tweets.Tweet
-	foundedTweet = findTweetByMessage(tweetMessage)
-	if foundedTweet == nil {
-		fmt.Println("не знаю такого твита")
-		c.String(http.StatusBadRequest, fmt.Sprintf("я с %s не нашел", tweetMessage))
-		return
-	}
-	c.JSON(http.StatusOK, foundedTweet)
-}
-func findTweetByMessage(NewMessage string) []m_tweets.Tweet {
+func FindTweetByMessage(NewMessage string) []m_tweets.Tweet {
 	var MessageArr []m_tweets.Tweet
 	for i, v := range TweetArr {
 		if NewMessage == v.Message {
